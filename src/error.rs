@@ -1,4 +1,4 @@
-use crate::std::fmt;
+use std::fmt;
 use crate::{builder, parser};
 
 /// A general error that can occur when working with UUIDs.
@@ -52,7 +52,7 @@ impl fmt::Display for Error {
 #[cfg(feature = "std")]
 mod std_support {
     use super::*;
-    use crate::std::error;
+    use std::error;
 
     impl error::Error for Error {
         fn source(&self) -> Option<&(dyn error::Error + 'static)> {

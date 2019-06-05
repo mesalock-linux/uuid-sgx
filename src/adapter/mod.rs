@@ -12,7 +12,7 @@
 //! Adapters for various formats for UUIDs
 
 use crate::prelude::*;
-use crate::std::{fmt, str};
+use std::{fmt, str};
 
 #[cfg(feature = "serde")]
 pub mod compact;

@@ -1,4 +1,4 @@
-use crate::std::fmt;
+use std::fmt;
 
 /// The error that can occur when creating a [`Uuid`].
 ///
@@ -46,7 +46,7 @@ impl fmt::Display for Error {
 mod std_support {
     use super::*;
 
-    use crate::std::error;
+    use std::error;
 
     impl error::Error for Error {}
 }

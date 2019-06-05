@@ -125,26 +125,25 @@
 //! [`v1::ClockSequence`]: v1/trait.ClockSequence.html
 //! [`v1::Context`]: v1/struct.Context.html
 
-#![no_std]
-#![deny(missing_debug_implementations, missing_docs)]
+//#![no_std]
+//#![deny(missing_debug_implementations, missing_docs)]
 #![doc(
     html_logo_url = "https://www.rust-lang.org/logos/rust-logo-128x128-blk-v2.png",
     html_favicon_url = "https://www.rust-lang.org/favicon.ico",
     html_root_url = "https://docs.rs/uuid/0.8.1"
 )]
 
-#[cfg(any(feature = "std", test))]
-#[macro_use]
-extern crate std;
+#![cfg_attr(all(feature = "mesalock_sgx", not(target_env = "sgx")), no_std)]
+#![cfg_attr(all(target_env = "sgx", target_vendor = "mesalock"), feature(rustc_private))]
 
-#[cfg(all(not(feature = "std"), not(test)))]
+#[cfg(all(feature = "mesalock_sgx", not(target_env = "sgx")))]
 #[macro_use]
-extern crate core as std;
+extern crate sgx_tstd as std;
 
-mod builder;
-mod error;
-mod parser;
-mod prelude;
+pub mod builder;
+pub mod error;
+pub mod parser;
+pub mod prelude;
 
 pub mod adapter;
 #[cfg(feature = "v1")]
@@ -192,7 +191,7 @@ mod v5;
 #[cfg(all(windows, feature = "winapi"))]
 mod winapi_support;
 
-use crate::std::{fmt, str};
+use std::{fmt, str};
 
 pub use crate::{builder::Builder, error::Error};
 
